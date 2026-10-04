@@ -1,0 +1,120 @@
+import { z } from 'zod';
+
+export const EmployeeSchema = z.object({
+  empno: z.string().min(1),
+  emp_type: z.string().nullable().optional(),
+  first_name: z.string().nullable().optional(),
+  last_name: z.string().nullable().optional(),
+  full_name: z.string().nullable().optional(),
+  designation: z.string().nullable().optional(),
+  dob: z.string().nullable().optional(),
+  gender: z.string().nullable().optional(),
+  qualification: z.string().nullable().optional(),
+  pre_exp: z.string().nullable().optional(),
+  telephone1: z.string().nullable().optional(),
+  telephone2: z.string().nullable().optional(),
+  job_profile: z.string().nullable().optional(),
+  joining_date: z.string(),
+  email: z.string().nullable().optional(),
+  street: z.string().nullable().optional(),
+  street2: z.string().nullable().optional(),
+  street3: z.string().nullable().optional(),
+  city: z.string().nullable().optional(),
+  state: z.string().nullable().optional(),
+  ctr: z.string().nullable().optional(),
+  postal_code: z.string().nullable().optional(),
+  doc_sub: z.string().nullable().optional(),
+  resig_date: z.string().nullable().optional(),
+  resig_reason: z.string().nullable().optional(),
+  aadhar_no: z.string().nullable().optional(),
+  pan_no: z.string().nullable().optional(),
+  bank_ac: z.string().nullable().optional(),
+  bank_name: z.string().nullable().optional(),
+  prev_esi: z.string().nullable().optional(),
+  prev_pf: z.string().nullable().optional(),
+  curr_esi: z.string().nullable().optional(),
+  current_pf: z.string().nullable().optional(),
+  age: z.string().nullable().optional(),
+  community: z.string().nullable().optional(),
+  religion: z.string().nullable().optional(),
+  caste: z.string().nullable().optional(),
+  marital_status: z.string().nullable().optional(),
+  pf_applicable: z.number().int().min(0).max(1).default(0),
+  esi_applicable: z.number().int().min(0).max(1).default(0),
+  created_by: z.string().nullable().optional(),
+  created_on: z.string().nullable().optional(),
+});
+
+export const SalarySchema = z.object({
+  id: z.number().optional(),
+  empno: z.string(),
+  valid_from: z.string(),
+  valid_to: z.string(),
+  basic: z.number().default(0),
+  da: z.number().default(0),
+  hra: z.number().default(0),
+  conveyance: z.number().default(0),
+  special_allowance: z.number().default(0),
+});
+
+export const LeaveDeductionSchema = z.object({
+  id: z.number().optional(),
+  empno: z.string(),
+  payroll_month: z.number().min(1).max(12),
+  payroll_year: z.number().min(2000).max(2100),
+  leave_days: z.number().min(0).default(0),
+});
+
+export const PayrollRunSchema = z.object({
+  id: z.number().optional(),
+  payroll_month: z.number(),
+  payroll_year: z.number(),
+  created_on: z.string(),
+  created_by: z.string().nullable().optional(),
+});
+
+export const PayrollResultSchema = z.object({
+  id: z.number().optional(),
+  run_id: z.number(),
+  empno: z.string(),
+  full_name: z.string().nullable().optional(),
+  joining_date: z.string().nullable().optional(),
+  leave_days: z.number().nullable().optional(),
+  basic: z.number().nullable().optional(),
+  da: z.number().nullable().optional(),
+  hra: z.number().nullable().optional(),
+  conveyance: z.number().nullable().optional(),
+  special_allowance: z.number().nullable().optional(),
+  leave_deduct: z.number().nullable().optional(),
+  gross_salary: z.number().nullable().optional(),
+  employee_pf: z.number().nullable().optional(),
+  employer_pf: z.number().nullable().optional(),
+  employer_admin: z.number().nullable().optional(),
+  employee_esi: z.number().nullable().optional(),
+  employer_esi: z.number().nullable().optional(),
+  total_deduct: z.number().nullable().optional(),
+  net_salary: z.number().nullable().optional(),
+  total_ctc: z.number().nullable().optional(),
+});
+
+export const PayrollPeriodSchema = z.object({
+  month: z.number().min(1).max(12),
+  year: z.number().min(2000).max(2100),
+});
+
+export const SaveLeaveSchema = z.object({
+  month: z.number().min(1).max(12),
+  year: z.number().min(2000).max(2100),
+  leaves: z.array(z.object({
+    empno: z.string(),
+    leave_days: z.number(),
+  })),
+});
+
+export type Employee = z.infer<typeof EmployeeSchema>;
+export type Salary = z.infer<typeof SalarySchema>;
+export type LeaveDeduction = z.infer<typeof LeaveDeductionSchema>;
+export type PayrollRun = z.infer<typeof PayrollRunSchema>;
+export type PayrollResult = z.infer<typeof PayrollResultSchema>;
+export type PayrollPeriod = z.infer<typeof PayrollPeriodSchema>;
+export type SaveLeave = z.infer<typeof SaveLeaveSchema>;
